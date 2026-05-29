@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Krebix — Workflows and forget.</title>
+  <link rel="icon" type="image/png" href="krebix-dark-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -57,21 +58,27 @@
     /* ── FLOATING NAV ── */
     .nav-float {
       position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 48px);
-      max-width: 900px;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
       z-index: 50;
-      background: rgba(10,15,30,0.85);
+      background: rgba(10,15,30,0.7);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 999px;
-      padding: 10px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 32px;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+    @media (max-width: 640px) {
+      .nav-float { padding: 12px 18px; }
     }
 
     /* ── MARQUEE ── */
@@ -301,6 +308,45 @@
     .stat-item:nth-child(3) { animation-delay: 0.2s; }
 
     .stat-num { font-family: 'Poppins', sans-serif; font-weight: 800; }
+
+    /* ── LOGO ── */
+    .nav-logo { height: 30px; width: auto; display: block; }
+    .footer-logo { height: 30px; width: auto; display: block; }
+    .hero-logo { width: 100%; max-width: 300px; height: auto; display: block; }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    .hero-logo-wrap { animation: floaty 6s ease-in-out infinite; }
+    .about-logo { width: 100%; max-width: 340px; height: auto; display: block; }
+
+    /* ── SHOP shared ── */
+    .shop-pill {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(16,185,129,0.12); color:#059669;
+      font-size:0.7rem; font-weight:700; letter-spacing:0.12em;
+      text-transform:uppercase; padding:0.4rem 1.1rem; border-radius:999px;
+      border:1px solid rgba(16,185,129,0.3); font-family:'Poppins',sans-serif;
+    }
+    .now-row{ display:flex; gap:10px; align-items:flex-start; }
+    .now-dot{ flex-shrink:0; width:18px; height:18px; border-radius:50%; margin-top:2px;
+      display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800;
+      font-family:'Poppins',sans-serif; }
+    .now-bad{ background:#fef2f2; color:#ef4444; }
+    .now-good{ background:#ecfdf5; color:#10b981; }
+
+    .reveal-row{
+      opacity:0; transform:translateY(40px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .reveal-row.visible{ opacity:1; transform:none; }
+    .reveal-row .panel{
+      border-radius:24px; padding:40px;
+      background:linear-gradient(145deg,#f0fdf8,#ecfdf5); border:1px solid #a7f3d0;
+    }
+    .reveal-ico{ width:54px;height:54px;border-radius:15px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#10b981,#059669); color:#fff; }
+    
   </style>
 </head>
 
@@ -308,21 +354,27 @@
 
   <!-- ═══ FLOATING NAV ═══ -->
   <nav class="nav-float" role="navigation" aria-label="Main navigation">
-    <span class="text-white font-heading font-black text-lg tracking-tight">Krebix</span>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#what-we-do" class="text-sm text-white/50 hover:text-white transition-colors duration-200 font-body">What we do</a>
-      <a href="#work" class="text-sm text-white/50 hover:text-white transition-colors duration-200 font-body">Work</a>
-      <a href="#about" class="text-sm text-white/50 hover:text-white transition-colors duration-200 font-body">About</a>
+    <div class="nav-inner">
+      <a href="#" aria-label="Krebix home" class="flex items-center gap-2.5">
+        <img src="krebix-light-icon.png" alt="" class="nav-logo" />
+        <span class="text-white font-heading font-black text-lg tracking-tight">Krebix</span>
+      </a>
+      <div class="hidden md:flex items-center gap-10">
+        <a href="#what-we-do" class="text-sm text-white/50 hover:text-white transition-colors duration-200 font-body">What we do</a>
+        <a href="#work" class="text-sm text-white/50 hover:text-white transition-colors duration-200 font-body">Work</a>
+        <a href="#about" class="text-sm text-white/50 hover:text-white transition-colors duration-200 font-body">About</a>
+      </div>
+      <a href="#contact" class="btn-primary text-sm px-5 py-2.5">Book a free call</a>
     </div>
-    <a href="#contact" class="btn-primary text-sm px-5 py-2.5">Book a free call</a>
   </nav>
 
 
   <!-- ═══ HERO (dark) ═══ -->
   <section class="hero-bg min-h-screen flex items-center pt-32 pb-24 px-4 sm:px-6">
     <div class="hero-grid" aria-hidden="true"></div>
-    <div class="max-w-5xl mx-auto w-full relative z-10">
+    <div class="max-w-5xl mx-auto w-full relative z-10 grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
 
+      <div>
       <div class="pill pill-light mb-8">
         <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
@@ -349,16 +401,18 @@
       <div class="flex flex-wrap gap-10">
         <div class="stat-item">
           <div class="stat-num text-3xl text-emerald-400">Built once.</div>
-          <div class="text-white/40 text-sm font-body mt-1">No ongoing salary</div>
         </div>
         <div class="stat-item">
           <div class="stat-num text-3xl text-emerald-400">Runs 24/7.</div>
-          <div class="text-white/40 text-sm font-body mt-1">No sick days. No holidays.</div>
         </div>
         <div class="stat-item">
           <div class="stat-num text-3xl text-emerald-400">Zero jargon.</div>
-          <div class="text-white/40 text-sm font-body mt-1">We speak human, not tech.</div>
         </div>
+      </div>
+      </div>
+
+      <div class="hidden lg:flex justify-center hero-logo-wrap">
+        <img src="krebix-light.png" alt="Krebix" class="hero-logo" />
       </div>
     </div>
 
@@ -370,26 +424,26 @@
   <!-- ═══ MARQUEE ═══ -->
   <div class="bg-slate-900 border-y border-white/[0.05] py-5 marquee-wrap" aria-hidden="true">
     <div class="marquee-track text-white/30 text-sm font-body font-medium">
-      <span>Invoice chasing</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Appointment reminders</span><span class="text-emerald-500 select-none">✦</span>
-      <span>CRM updates</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Weekly reports</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Lead follow-ups</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Data entry</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Spreadsheet exports</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Onboarding emails</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Stock alerts</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Booking confirmations</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Invoice chasing</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Appointment reminders</span><span class="text-emerald-500 select-none">✦</span>
-      <span>CRM updates</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Weekly reports</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Lead follow-ups</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Data entry</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Spreadsheet exports</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Onboarding emails</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Stock alerts</span><span class="text-emerald-500 select-none">✦</span>
-      <span>Booking confirmations</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Auto-sorted invoices</span><span class="text-emerald-500 select-none">✦</span>
+      <span>An AI that knows your business</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Instant client briefs</span><span class="text-emerald-500 select-none">✦</span>
+      <span>24/7 answers</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Quotes in seconds</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Tools that finally talk</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Feedback into priorities</span><span class="text-emerald-500 select-none">✦</span>
+      <span>An inbox that sorts itself</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Weekly business catch-up</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Always-current contacts</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Auto-sorted invoices</span><span class="text-emerald-500 select-none">✦</span>
+      <span>An AI that knows your business</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Instant client briefs</span><span class="text-emerald-500 select-none">✦</span>
+      <span>24/7 answers</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Quotes in seconds</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Tools that finally talk</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Feedback into priorities</span><span class="text-emerald-500 select-none">✦</span>
+      <span>An inbox that sorts itself</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Weekly business catch-up</span><span class="text-emerald-500 select-none">✦</span>
+      <span>Always-current contacts</span><span class="text-emerald-500 select-none">✦</span>
     </div>
   </div>
 
@@ -398,10 +452,10 @@
   <section class="bg-slate-50 py-28 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
 
-      <div class="max-w-xl mb-16">
-        <p class="text-emerald-600 text-sm font-heading font-semibold tracking-widest uppercase mb-4">The problem</p>
-        <h2 class="font-heading font-black text-3xl md:text-4xl lg:text-5xl leading-tight mb-4 text-slate-900">Sound familiar?</h2>
-        <p class="text-slate-500 text-lg font-body leading-relaxed">If any of these hit close to home, we should talk.</p>
+      <div class="max-w-2xl mb-16">
+        <p class="text-emerald-600 text-sm font-heading font-semibold tracking-widest uppercase mb-4">What's actually possible</p>
+        <h2 class="font-heading font-black text-3xl md:text-4xl lg:text-5xl leading-tight mb-4 text-slate-900">You don't know what you don't know.</h2>
+        <p class="text-slate-500 text-lg font-body leading-relaxed">You're closer to this than you'd think. The clever stuff — work that runs itself, an AI that actually knows your business, tools that finally talk — isn't just for big companies with IT teams. Here's the kind of thing we do.</p>
       </div>
 
       <div class="grid sm:grid-cols-2 gap-4">
@@ -409,41 +463,41 @@
         <div class="pain-card">
           <div class="icon-box icon-box-green mb-5" aria-hidden="true">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
             </svg>
           </div>
-          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">You're copy-pasting the same thing every week</h3>
-          <p class="text-slate-500 leading-relaxed font-body text-sm">Reports, emails, spreadsheet updates — the same routine, every single week, by hand.</p>
+          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">Work that runs itself</h3>
+          <p class="text-slate-500 leading-relaxed font-body text-sm">The repetitive stuff — sorting invoices, sending reminders, keeping records up to date — quietly handled in the background while you get on with the real work.</p>
         </div>
 
         <div class="pain-card">
           <div class="icon-box icon-box-green mb-5" aria-hidden="true">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
             </svg>
           </div>
-          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">You're paying someone just to chase people</h3>
-          <p class="text-slate-500 leading-relaxed font-body text-sm">Follow-up emails, appointment reminders, invoice chasers — all going out manually.</p>
+          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">An AI that knows your business</h3>
+          <p class="text-slate-500 leading-relaxed font-body text-sm">An assistant that's read your numbers, your deals and your customers — ready to prep you for meetings, answer questions 24/7, and reply in your voice.</p>
         </div>
 
         <div class="pain-card">
           <div class="icon-box icon-box-green mb-5" aria-hidden="true">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
             </svg>
           </div>
-          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">Your tools don't talk to each other</h3>
-          <p class="text-slate-500 leading-relaxed font-body text-sm">Your CRM doesn't know what your inbox knows. Someone has to bridge the gap — manually.</p>
+          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">Your tools, finally talking</h3>
+          <p class="text-slate-500 leading-relaxed font-body text-sm">Enter something once and watch it land everywhere it needs to — bookings, spreadsheets, accounts, contacts — all in sync, no copy-pasting across apps.</p>
         </div>
 
         <div class="pain-card">
           <div class="icon-box icon-box-green mb-5" aria-hidden="true">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
           </div>
-          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">You hired someone just for admin</h3>
-          <p class="text-slate-500 leading-relaxed font-body text-sm">A full salary for tasks that could run themselves. That's money that could go elsewhere.</p>
+          <h3 class="font-heading font-bold text-lg mb-2 text-slate-900">Your own data, working for you</h3>
+          <p class="text-slate-500 leading-relaxed font-body text-sm">Turn what you already have — past sales, customer history, feedback — into faster quotes, sharper decisions and a clear view of what people want next.</p>
         </div>
 
       </div>
@@ -504,6 +558,292 @@
       </div>
     </div>
   </section>
+
+
+  <!-- ═══ SHOP (scroll reveal) ═══ -->
+  <section id="shop" class="bg-white py-28 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="max-w-2xl mb-20">
+        <p class="text-emerald-600 text-sm font-heading font-semibold tracking-widest uppercase mb-4">Have a browse</p>
+        <h2 class="font-heading font-black text-3xl md:text-4xl lg:text-5xl leading-tight mb-4 text-slate-900">Things we can take off your plate.</h2>
+        <p class="text-slate-500 text-lg font-body leading-relaxed">Most of this, nobody's ever shown you was possible. Have a scroll &mdash; odds are a few of these are quietly stealing your time.</p>
+      </div>
+
+      <div class="flex items-start gap-3 mb-16 p-5 rounded-2xl bg-emerald-50/60 border border-emerald-100 max-w-2xl">
+        <svg class="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-slate-600 font-body leading-relaxed text-sm">These are just a few favourites to spark ideas. Everything we build is shaped around <span class="font-semibold text-slate-800">your</span> business, your tools and the way you actually work.</p>
+      </div>
+
+      <div class="space-y-20 md:space-y-28">
+        
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Insights</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Your whole business, one quick catch-up</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-gradient-to-r from-emerald-50 to-indigo-50 text-slate-700 border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500"></span>A bit of both</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Right now, the full picture lives across a handful of different apps and tabs.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Get a plain-English summary in your inbox each week — or just ask your own AI that knows your role, your deals and your numbers, any time.</p>
+            </div>
+          </div>
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">01</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">02</p>
+            </div>
+          </div>
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Money</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Sort every invoice the second it lands</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Runs itself</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Invoices turn up by email, WhatsApp, even photos of receipts — and each one gets filed by hand.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> When an invoice comes in, it's read, sorted and filed neatly wherever you like it — all on its own.</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Sales</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Walk into every deal already clued up</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-indigo-50 text-indigo-700 border-indigo-200"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>Thinks for you</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Prep usually means whatever you had a spare minute to look up beforehand.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Before each meeting you get a fresh brief on the client — their latest news, numbers and what they care about — pulled together for you.</p>
+            </div>
+          </div>
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 00-3-3.87"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">03</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">04</p>
+            </div>
+          </div>
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Customers</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Answer the usual questions, 24/7</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-indigo-50 text-indigo-700 border-indigo-200"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>Thinks for you</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> The same questions come in at all hours, and people wait around for a reply.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> A smart assistant answers your common questions instantly, day or night, in your tone of voice.</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Marketing</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Turn feedback into your next move</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-gradient-to-r from-emerald-50 to-indigo-50 text-slate-700 border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500"></span>A bit of both</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Reviews are gold — and even when they come in, they tend to just sit there.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Happy customers get asked automatically, then all that feedback becomes a clear list of what people love and what they want next.</p>
+            </div>
+          </div>
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">05</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">06</p>
+            </div>
+          </div>
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Admin</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Stop typing the same thing twice</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Runs itself</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> The same details get entered into bookings, a spreadsheet, then your accounts.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Enter it once and it flows everywhere it needs to go, on its own.</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Customers</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Give every new customer a warm welcome</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Runs itself</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> A great first impression matters — and doing it by hand for everyone is a big ask.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Every new customer gets a warm welcome (or a few) automatically, so everyone gets the same brilliant start.</p>
+            </div>
+          </div>
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">07</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">08</p>
+            </div>
+          </div>
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Admin</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Reorder before you ever run out</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Runs itself</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Often you spot you're out of something right when a customer asks for it.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> You get a heads-up the moment stock runs low, so you can reorder in good time.</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Money</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Quotes ready in seconds, not hours</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-gradient-to-r from-emerald-50 to-indigo-50 text-slate-700 border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500"></span>A bit of both</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Writing a quote means digging out old prices and typing it all out again.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Pulling from your own past sales and pricing, a tidy, on-brand quote is ready to send in seconds.</p>
+            </div>
+          </div>
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">09</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">10</p>
+            </div>
+          </div>
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Admin</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">An inbox that sorts itself</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-indigo-50 text-indigo-700 border-indigo-200"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>Thinks for you</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> The important emails have a habit of getting buried under everything else.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Emails get sorted, routine replies get drafted for you, and the ones that matter rise to the top.</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-row grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          
+          <div>
+            <span class="text-xs font-body font-semibold tracking-widest uppercase text-emerald-600">Admin</span>
+            <h3 class="font-heading font-black text-2xl md:text-3xl text-slate-900 mt-2 mb-4 leading-tight">Customer details that never go stale</h3>
+            <div class="mb-4"><span class="inline-flex items-center gap-1.5 text-[0.7rem] font-body font-semibold px-2.5 py-1 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Runs itself</span></div>
+            <div class="now-row mb-3">
+              <span class="now-dot now-bad">&times;</span>
+              <p class="text-slate-500 font-body leading-relaxed"><span class="font-semibold text-slate-600">Right now:</span> Contact details tend to live in a few places, and they don't always agree.</p>
+            </div>
+            <div class="now-row">
+              <span class="now-dot now-good">&check;</span>
+              <p class="text-slate-700 font-body leading-relaxed text-lg"><span class="font-semibold text-emerald-700">Instead:</span> Every new contact and change syncs across your tools automatically, always current.</p>
+            </div>
+          </div>
+          
+          <div class="panel flex items-center justify-center">
+            <div class="text-center">
+              <div class="reveal-ico mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 00-3-3.87"/></svg></div>
+              <p class="font-heading font-black text-5xl md:text-6xl text-emerald-600/15 leading-none">11</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-slate-400 font-body mt-24">And this is just the start. <a href="#contact" class="text-emerald-600 font-semibold hover:underline">Tell us where your time goes</a> &mdash; we'll show you what's possible.</p>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const rows=document.querySelectorAll('.reveal-row');
+      if(!('IntersectionObserver' in window)){ rows.forEach(r=>r.classList.add('visible')); return; }
+      const io=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+      },{threshold:0.2});
+      rows.forEach(r=>io.observe(r));
+    })();
+  </script>
 
 
   <!-- ═══ WORK (light grey) ═══ -->
@@ -635,7 +975,10 @@
   <!-- ═══ FOOTER ═══ -->
   <footer class="bg-slate-900 border-t border-white/[0.05] py-8 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-      <span class="font-heading font-black text-lg text-white">Krebix</span>
+      <a href="#" aria-label="Krebix home" class="flex items-center gap-2.5">
+        <img src="krebix-light-icon.png" alt="" class="footer-logo" />
+        <span class="font-heading font-black text-lg text-white">Krebix</span>
+      </a>
       <span class="font-body italic text-white/25 text-sm">"Workflows and forget."</span>
       <span class="font-body text-white/20 text-sm">© 2025</span>
     </div>
